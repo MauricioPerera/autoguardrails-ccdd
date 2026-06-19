@@ -9,6 +9,12 @@ Write-Host "Iniciando iteración de Autoguardrails..."
 # Copiamos la política actual al engine para que pueda mutarla
 Copy-Item "$ContractDir\policies.txt" "$AutoguardrailsDir\policy.md" -Force
 
+Write-Host "Inyectando timeout de 3600s en el motor para soportar LLMs locales..."
+$ConfigFile = "$AutoguardrailsDir\autoguardrails\config.py"
+if (Test-Path $ConfigFile) {
+    (Get-Content $ConfigFile) -replace 'wall_clock_seconds:\s*int\s*=\s*900', 'wall_clock_seconds: int = 3600' | Set-Content $ConfigFile
+}
+
 Push-Location $AutoguardrailsDir
 try {
     # Ejecutamos el baseline si no existe
@@ -21,6 +27,9 @@ try {
     Write-Host "Evaluando candidato..."
     python -m autoguardrails candidate --repeat 1 --notes "Automated CCDD search"
 } finally {
+    if (Test-Path $ConfigFile) {
+        (Get-Content $ConfigFile) -replace 'wall_clock_seconds:\s*int\s*=\s*3600', 'wall_clock_seconds: int = 900' | Set-Content $ConfigFile
+    }
     Pop-Location
 }
 
