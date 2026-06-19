@@ -9,6 +9,9 @@ Write-Host "Iniciando iteración de Autoguardrails..."
 # Copiamos la política actual al engine para que pueda mutarla
 Copy-Item "$ContractDir\policies.txt" "$AutoguardrailsDir\policy.md" -Force
 
+Write-Host "Limpiando posibles remanentes de ejecuciones previas abortadas..."
+git -C "$AutoguardrailsDir" checkout -- autoguardrails/config.py 2>$null
+
 Write-Host "Inyectando timeout de 3600s en el motor para soportar LLMs locales..."
 $ConfigFile = "$AutoguardrailsDir\autoguardrails\config.py"
 if (Test-Path $ConfigFile) {
@@ -28,7 +31,7 @@ try {
     python -m autoguardrails candidate --repeat 1 --notes "Automated CCDD search"
 } finally {
     if (Test-Path $ConfigFile) {
-        git -C "$AutoguardrailsDir" restore autoguardrails/config.py
+        git -C "$AutoguardrailsDir" checkout -- autoguardrails/config.py 2>$null
     }
     Pop-Location
 }
