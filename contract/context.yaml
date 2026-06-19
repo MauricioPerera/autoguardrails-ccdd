@@ -1,0 +1,25 @@
+ccdd_version: "0.3"
+contract:
+  name: "autoguardrails-secured-agent"
+  budget:
+    model: "gpt-4o"
+    max_tokens: 128000
+    reserve_output: 4000
+  slots:
+    - id: system
+      priority: 1
+      source: { type: static, path: "system.txt", sign: true }
+      compaction: none
+      min_tokens: 200
+    - id: policies
+      priority: 1
+      source: { type: static, path: "policies.txt", sign: true }
+      compaction: none
+      min_tokens: 100
+      max_tokens: 1500
+      review_quorum: 1
+  guardrails:
+    - id: no-secrets
+      type: regex_deny
+      pattern: "(sk-[A-Za-z0-9]{20,})"
+      on_fail: abort

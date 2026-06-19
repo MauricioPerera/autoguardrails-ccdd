@@ -1,0 +1,10 @@
+# Autoguardrails Engine state
+engine/.autoguardrails/
+engine/__pycache__/
+engine/results.tsv
+
+# Python
+*.pyc
+
+# Temporary backups
+*.bak
