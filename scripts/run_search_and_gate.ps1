@@ -15,7 +15,12 @@ git -C "$AutoguardrailsDir" checkout -- autoguardrails/config.py policy.md 2>$nu
 Write-Host "Inyectando timeout de 3600s en el motor para soportar LLMs locales..."
 $ConfigFile = "$AutoguardrailsDir\autoguardrails\config.py"
 if (Test-Path $ConfigFile) {
-    (Get-Content $ConfigFile) -replace 'wall_clock_seconds:\s*int\s*=\s*\d+', 'wall_clock_seconds: int = 3600' | Set-Content $ConfigFile
+    $ConfigContent = Get-Content $ConfigFile
+    if ($ConfigContent -match 'wall_clock_seconds:\s*int\s*=\s*\d+') {
+        $ConfigContent -replace 'wall_clock_seconds:\s*int\s*=\s*\d+', 'wall_clock_seconds: int = 3600' | Set-Content $ConfigFile
+    } else {
+        Write-Warning "No se pudo inyectar el timeout: la variable 'wall_clock_seconds' ya no existe o cambió de estructura en el upstream."
+    }
 }
 
 Push-Location $AutoguardrailsDir
