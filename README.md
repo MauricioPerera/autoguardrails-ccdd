@@ -12,7 +12,7 @@ Esta integración soluciona el problema creando un **laboratorio de pruebas de c
 3. **Sellado de Integridad:** Si todo está bien, el sistema registra los hashes SHA-256 de los slots en `expected-hashes.json`, garantizando que la política exacta que pasó las pruebas no pueda ser mutada accidentalmente sin invalidar el contrato en producción.
 
 > [!NOTE]
-> En una ejecución empírica de referencia (cuyos artefactos `eval_suite.jsonl` y `results.tsv` residen dentro del estado del submódulo de investigación), el modelo local logró llevar el **ASR a 0.0000%** bloqueando todos los ataques del benchmark y consumiendo únicamente **333 tokens** del contrato.
+> En nuestra ejecución empírica de referencia en hardware local, el modelo logró llevar el **ASR a 0.0000%** bloqueando todos los ataques del benchmark y consumiendo únicamente **333 tokens** del contrato. (Nota: los artefactos de esta corrida específica no están versionados; el archivo `results.tsv` que se genera en el submódulo reflejará los resultados de tu propia ejecución).
 
 ## Arquitectura del Repositorio
 
