@@ -10,7 +10,7 @@ contract:
       priority: 1
       source: { type: static, path: "system.txt", sign: true }
       compaction: none
-      min_tokens: 200
+      min_tokens: 20
     - id: policies
       priority: 1
       source: { type: static, path: "policies.txt", sign: true }
