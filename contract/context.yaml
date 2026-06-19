@@ -8,6 +8,7 @@ contract:
   slots:
     - id: system
       priority: 1
+      # 'sign' es la palabra reservada del esquema CCDD para activar el hash SHA-256 de integridad
       source: { type: static, path: "system.txt", sign: true }
       compaction: none
       min_tokens: 20

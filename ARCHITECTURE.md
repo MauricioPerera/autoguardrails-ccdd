@@ -13,7 +13,7 @@ Esto produce una **alucinación de crecimiento**:
 
 ## La Solución: CCDD como Función Matemática de Costo
 
-Para resolver esto, integramos `CCDD-Gate`. En esta arquitectura, CCDD no se utiliza para evaluar código fuente (AST), sino para aplicar restricciones criptográficas y presupuestarias sobre el Prompt (Markdown).
+Para resolver esto, integramos `CCDD-Gate`. En esta arquitectura, CCDD no se utiliza para evaluar código fuente (AST), sino para aplicar restricciones estructurales, de integridad (hashing) y presupuestarias sobre el Prompt (Markdown).
 
 El sistema opera mediante una selección natural de **dos capas**:
 
@@ -41,7 +41,7 @@ graph TD
     C -->|ASR > 0 o Falso Positivo| D[Descartar Candidato]
     C -->|ASR Mejorado| E{Capa 2: CCDD-Gate}
     E -->|Tokens > 1500| D
-    E -->|Tokens <= 1500| F[Firmar y Guardar]
+    E -->|Tokens <= 1500| F[Validar y Sellar]
     F --> G[expected-hashes.json actualizado]
     D --> A
 ```
